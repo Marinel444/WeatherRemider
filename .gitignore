@@ -1,2 +1,7 @@
 venv/
+.idea/
 DjangoWeatherRemider/DjangoWeatherRemider/__pycache__/
+DjangoWeatherRemider/weather/migrations/__pycache__/
+DjangoWeatherRemider/weather/__pycache__/
+add_city.py
+DjangoWeatherRemider/db.sqlite3
