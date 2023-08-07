@@ -15,6 +15,7 @@ class Subscription(models.Model):
     period = models.PositiveIntegerField(choices=[(1, '1 hour'), (3, '3 hours'), (6, '6 hours'), (12, '12 hours')])
     webhook_url = models.URLField(null=True, blank=True)
     email_notification = models.BooleanField(default=False)
+    last_notification = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f'{self.user}-{self.city}'
