@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 from datetime import timedelta
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -170,9 +171,14 @@ SIMPLE_JWT = {
 CELERY_BROKER_URL = 'redis://localhost:6379/0'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
 
-EMAIL_HOST = 'sandbox.smtp.mailtrap.io'
-EMAIL_HOST_USER = '55916e23ce919b'
-EMAIL_HOST_PASSWORD = '934952aff102bd'
-EMAIL_PORT = '2525'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587  # Используйте 465, если хотите использовать SSL
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False  # Установите в True, если используете SSL
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = 'your_email@gmail.com'
 
-WEATHER_API = '5b8e7f2caaaa6bc0a96cf57e610fb26e'
+
+WEATHER_API = os.environ.get('WEATHER_API')

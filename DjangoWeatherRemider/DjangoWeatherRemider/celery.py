@@ -10,7 +10,7 @@ app.autodiscover_tasks()
 app.conf.beat_schedule = {
     'get_city_weather': {
         'task': 'weather.tasks.get_city_weather',
-        'schedule': crontab(minute='*/30'),
+        'schedule': crontab(minute='*/1'),
         'args': (),
     }
 }

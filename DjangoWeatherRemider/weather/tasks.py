@@ -6,6 +6,16 @@ from django.utils import timezone
 import requests
 
 
+def send_mail_tack(weather, user):
+    send_mail(
+        f'Weather notification for {weather.city}',
+        f"Температура: {weather.temperature}°C\n{weather.description}",
+        'weather@gmail.com',
+        [user.email],
+        fail_silently=False
+    )
+
+
 def add_subscription_data(city, data):
     description = f"Минимальная температура: {data['main']['temp_min']}°C\n" \
                   f"Максимальная температура: {data['main']['temp_max']}°C"
@@ -35,13 +45,3 @@ def get_city_weather():
             add_subscription_data(item.city, data)
             weather = WeatherData.objects.filter(city=item.city).first()
             send_mail_tack(weather, item.user)
-
-
-def send_mail_tack(weather, user):
-    send_mail(
-        f'Weather notification for {weather.city}',
-        f"Температура: {weather.temperature}°C\n{weather.description}",
-        'weather@gmail.com',
-        [f'{user.email}'],
-        fail_silently=False
-    )
