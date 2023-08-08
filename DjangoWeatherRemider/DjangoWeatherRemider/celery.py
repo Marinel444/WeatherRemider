@@ -8,9 +8,14 @@ app.config_from_object('django.conf:settings', namespace='CELERY')
 app.autodiscover_tasks()
 
 app.conf.beat_schedule = {
-    'get_city_weather': {
-        'task': 'weather.tasks.get_city_weather',
+    'tasks-check-notification': {
+        'task': 'weather.tasks.check_notification',
         'schedule': crontab(minute='*/30'),
         'args': (),
-    }
+    },
+    'tasks-get-city-weather': {
+        'task': 'weather.tasks.get_city_weather',
+        'schedule': crontab(minute='0', hour='*/3'),
+        'args': (),
+    },
 }

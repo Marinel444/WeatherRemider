@@ -1,6 +1,6 @@
 from DjangoWeatherRemider.celery import app
 from django.core.mail import send_mail
-from .models import Subscription, WeatherData
+from .models import Subscription, WeatherData, City
 from DjangoWeatherRemider.settings import WEATHER_API
 from django.utils import timezone
 import requests
@@ -34,14 +34,20 @@ def add_subscription_data(city, data):
 
 @app.task()
 def get_city_weather():
+    cities = City.objects.all()
+    for city in cities:
+        response = requests.get(
+            f'http://api.openweathermap.org/data/2.5/weather?q={city.name}&appid={WEATHER_API}&units=metric')
+        data = response.json()
+        add_subscription_data(city.name, data)
+
+
+@app.task()
+def check_notification():
     subscribe = Subscription.objects.all()
     for item in subscribe:
         time = timezone.now() - item.last_notification
         hours = time.seconds // 3600
         if item.period <= hours:
-            response = requests.get(
-                f'http://api.openweathermap.org/data/2.5/weather?q={item.city}&appid={WEATHER_API}&units=metric')
-            data = response.json()
-            add_subscription_data(item.city, data)
             weather = WeatherData.objects.filter(city=item.city).first()
             send_mail_tack(weather, item.user)

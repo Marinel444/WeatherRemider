@@ -22,7 +22,7 @@ from weather.views import *
 
 router = routers.DefaultRouter()
 router.register(r'city', CityViewSet)
-router.register(r'wather', WeatherDataViewSet)
+router.register(r'weather', WeatherDataViewSet)
 router.register(r'subscribe', SubscriptionViewSet)
 
 urlpatterns = [
