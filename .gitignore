@@ -7,4 +7,4 @@ DjangoWeatherRemider/weather/__pycache__/
 DjangoWeatherRemider/weather/tests/__pycache__/
 DjangoWeatherRemider/weather/add_city.py
 DjangoWeatherRemider/db.sqlite3
-DjangoWeatherRemider/celerybeat-schedule.db
+celerybeat-schedule.db
